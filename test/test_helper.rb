@@ -1,5 +1,3 @@
-$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-require 'cuitar'
-require 'cuit'
+require_relative '../lib/cuitar'
 
 require 'minitest/autorun'
