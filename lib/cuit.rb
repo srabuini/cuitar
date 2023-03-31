@@ -1,14 +1,20 @@
 class Cuit
+  def self.valid?(cuit)
+    begin
+      new(cuit)
+    rescue
+      false
+    end
+  end
+
   def initialize(cuit)
-    @cuit = cuit.to_s.tr('^0-9', '')
+    @cuit = cuit.to_s.gsub(/\D/, '')
+
+    raise ArgumentError, 'Invalid CUIT' unless valid?
   end
 
   def to_s
     [type, dni, check_digit].join('-')
-  end
-
-  def valid?
-    @cuit.size == 11 && calculated_digit == check_digit
   end
 
   private
@@ -35,8 +41,20 @@ class Cuit
           .zip(cuit_sequence)
           .reduce(0) { |a, e| a + e.reduce(:*) }
 
-    diff = 11 - sum % 11
+    diff = 11 - (sum % 11)
 
     diff == 11 ? 0 : diff
+  end
+
+  def right_length?
+    @cuit.length == 11
+  end
+
+  def checked?
+    calculated_digit == check_digit
+  end
+
+  def valid?
+    right_length? && checked?
   end
 end

@@ -28,8 +28,6 @@ cuit_number = '20228518310' # o '20-22851831-0' o 20228518310
 
 cuit = Cuit.new(cuit_number)
 
-cuit.valid? # => true
-
 cuit.to_s # => '20-22851831-0'
 ```
 
@@ -40,6 +38,22 @@ cuit.to_s # => '20-22851831-0'
 * Un `String` conteniendo los 11 números que componen una CUIT, formateado con guiones.
 
 * Un `Integer` comprendido por los 11 números que componen una CUIT.
+
+Instanciar la clase `Cuit` con una CUIT inválida genera un `ArgumentError`
+
+```ruby
+cuit_number = 123
+
+cuit = Cuit.new(cuit_number) # => Invalid CUIT (ArgumentError)
+```
+
+Es posible validar una CUIT
+
+```ruby
+Cuit.valid?(123) # => false
+
+Cuit.valid?(20228518310) # =>  #<Cuit:0x000000010f589930 @check_digit=0, @cuit="20228518310", @dni="22851831", @type="20">
+```
 
 
 ## Contribuciones
